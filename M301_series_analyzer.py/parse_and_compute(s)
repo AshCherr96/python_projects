@@ -1,0 +1,58 @@
+def parse_and_compute(input_string):
+    """
+    Parses space-separated positive integers from input_string (without using .split()).
+    
+    Returns:
+        total_sum     – sum of all numbers (int)
+        number_count  – how many numbers were parsed (int)
+        smallest_num      – minimum number (int or "" if none)
+        largest_num       – maximum number (int or "" if none)
+        formatted_str – numbers in order, joined by ', ' (str)
+    """
+
+    total_sum = 0
+    number_count = 0
+    smallest_num = ""
+    largest_num = ""
+    formatted_str = ""
+    current_number_str = ""
+
+    # Traverse input string character by character
+    for character in input_string:
+        if '0' <= character <= '9':
+            current_number_str += character  # build up the current number
+        else:
+            if current_number_str:
+                number = int(current_number_str)
+                total_sum += number
+                number_count += 1
+
+                if smallest_num == "" or number < smallest_num:
+                    smallest_num = number
+                if largest_num == "" or number > largest_num:
+                    largest_num = number
+
+                formatted_str += (", " if formatted_str else "") + str(number)
+                current_number_str = ""  # reset for next number
+
+    # Flush any remaining number at the end
+    if current_number_str:
+        number = int(current_number_str)
+        total_sum += number
+        number_count += 1
+
+        if smallest_num == "" or number < smallest_num:
+            smallest_num = number
+        if largest_num == "" or number > largest_num:
+            largest_num = number
+
+        formatted_str += (", " if formatted_str else "") + str(number)
+
+    # Return defaults if no valid integers were found
+    if number_count == 0:
+        return 0, 0, "", "", ""
+
+    return total_sum, number_count, smallest_num, largest_num, formatted_str
+
+
+    
