@@ -1,0 +1,62 @@
+def is_prime(candidate_number):
+    """
+    Checks whether integer candidate_number is prime.
+    Returns:
+      (True, None)               if candidate_number is prime (candidate_number > 1),
+      (False, smallest_divisor) if candidate_number is composite,
+      (False, None)             if candidate_number <= 1.
+    """
+    # Numbers less than or equal to 1 are not prime
+    if candidate_number <= 1:
+        return False, None
+
+    # Check divisibility by every integer from 2 up to √candidate_number
+    test_divisor = 2
+    while test_divisor * test_divisor <= candidate_number:
+        if candidate_number % test_divisor == 0:
+            # Found a divisor: number is composite
+            return False, test_divisor
+        test_divisor += 1
+
+    # No divisors found: number is prime
+    return True, None
+
+
+
+def analyze_primes(a, b):
+    """
+    Analyzes primes in the inclusive range [a, b].
+    Returns:
+      primes_str (str)   — primes joined by spaces ("" if none),
+      count      (int)   — number of primes found,
+      total      (int)   — sum of those primes.
+    If a >= b or b <= 1, returns ("", 0, 0).
+    """
+    # Check for invalid input range
+    if a > b or b <= 1:
+        return "", 0, 0
+
+    current_number = a       # Start from the first number in the range
+    primes_str = ""          # Accumulate prime numbers as a space-separated string
+    prime_count = 0          # Count how many primes are found
+    prime_sum = 0            # Sum of all prime numbers found
+
+    # Loop from a to b 
+    while current_number <= b:
+        is_prime_flag, _ = is_prime(current_number)
+
+        if is_prime_flag:
+            # If current_number is prime, update results
+            primes_str += str(current_number) + " "
+            prime_count += 1
+            prime_sum += current_number
+
+        current_number += 1  # Move to next number in range
+
+    # Remove trailing space if at least one prime was added
+    if prime_count > 0:
+        primes_str = primes_str[:-1]
+
+    # Return the final results
+    return primes_str, prime_count, prime_sum
+
