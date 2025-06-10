@@ -1,0 +1,109 @@
+
+# Interactive Math Toolkit
+
+
+# Compute the Greatest Common Divisor using Euclidean Algorithm
+def compute_gcd(first_integer, second_integer):
+    while second_integer != 0:
+        first_integer, second_integer = second_integer, first_integer % second_integer
+    return first_integer
+
+# Compute Least Common Multiple using the GCD
+def compute_lcm(first_integer, second_integer):
+    gcd_value = compute_gcd(first_integer, second_integer)
+    return abs(first_integer * second_integer) // gcd_value
+
+# Option 1: GCD and LCM Calculator
+def gcd_and_lcm_calculator():
+    print("\n--- GCD & LCM Calculator ---")
+    first_number = int(input("Enter first integer: "))
+    second_number = int(input("Enter second integer: "))
+    gcd_result = compute_gcd(first_number, second_number)
+    lcm_result = compute_lcm(first_number, second_number)
+    print(f"GCD({first_number}, {second_number}) = {gcd_result}")
+    print(f"LCM({first_number}, {second_number}) = {lcm_result}")
+
+# Option 2: Basic Arithmetic Calculator
+def basic_arithmetic_calculator():
+    print("\n--- Basic Arithmetic Calculator ---")
+    first_operand = float(input("First number: "))
+    operator = input("Operator (+, -, *, /): ")
+    second_operand = float(input("Second number: "))
+
+    if operator == '+':
+        result = first_operand + second_operand
+    elif operator == '-':
+        result = first_operand - second_operand
+    elif operator == '*':
+        result = first_operand * second_operand
+    elif operator == '/':
+        result = first_operand / second_operand
+    else:
+        print("Invalid operator.")
+        return
+
+    print(f"{first_operand} {operator} {second_operand} = {result}")
+
+# Option 3: Sum of Digits
+def sum_of_digits():
+    print("\n--- Sum of Digits ---")
+    user_input = int(input("Enter an integer: "))
+    remaining_value = abs(user_input)
+    digit_sum = 0
+
+    while remaining_value > 0:
+        digit = remaining_value % 10
+        digit_sum += digit
+        remaining_value //= 10
+
+    print(f"Sum of digits of {user_input} is {digit_sum}")
+
+# Option 4: Integer Palindrome Checker
+def palindrome_checker():
+    print("\n--- Integer Palindrome Checker ---")
+    input_number = int(input("Enter an integer: "))
+    original_number = abs(input_number)
+    reversed_number = 0
+    temp_number = original_number
+
+    while temp_number > 0:
+        digit = temp_number % 10
+        reversed_number = reversed_number * 10 + digit
+        temp_number //= 10
+
+    if original_number == reversed_number:
+        print(f"{input_number} is a palindrome.")
+    else:
+        print(f"{input_number} is not a palindrome.")
+
+# ======================
+# Main Interactive Menu
+# ======================
+
+while True:
+    print("\n=== Math Toolkit ===")
+    print("1) GCD & LCM Calculator")
+    print("2) Basic Arithmetic Calculator")
+    print("3) Sum of Digits")
+    print("4) Integer Palindrome Checker")
+    print("5) Exit")
+
+    user_choice = input("Select an option (1–5): ")
+
+    if user_choice == '1':
+        gcd_and_lcm_calculator()
+    elif user_choice == '2':
+        basic_arithmetic_calculator()
+    elif user_choice == '3':
+        sum_of_digits()
+    elif user_choice == '4':
+        palindrome_checker()
+    elif user_choice == '5':
+        print("Exiting program. Goodbye!")
+        break
+    else:
+        print("Invalid selection. Please enter a number from 1 to 5.")
+
+    input("\n# Press Enter to return to menu...")
+
+
