@@ -1,0 +1,77 @@
+def analyze_text(input_string):
+    """
+    Takes string input_string and returns:
+      reversed_string   = reversed version of the string
+      total_length      = total number of characters
+      vowel_count       = count of vowels (A, E, I, O, U)
+      consonant_count   = count of consonant letters
+      is_palindrome     = True if input_string is a palindrome (letters only, case-insensitive)
+    Returns: reversed_string, total_length, vowel_count, consonant_count, is_palindrome
+    """
+
+
+    total_length = 0
+    vowel_count = 0
+    consonant_count = 0
+    cleaned = ""
+
+    # First pass: count length, classify letters, build cleaned string
+    index = 0
+    while True:
+        try:
+            ch = input_string[index]
+        except IndexError:
+            break
+
+        total_length += 1
+
+        # Manual lowercase conversion
+        if 'A' <= ch <= 'Z':
+            ch_lower = chr(ord(ch) + 32)
+        else:
+            ch_lower = ch
+
+        # Only process letters for vowels/consonants and palindrome
+        if 'a' <= ch_lower <= 'z':
+            # Vowel check
+            if ch_lower == 'a' or ch_lower == 'e' or ch_lower == 'i' or ch_lower == 'o' or ch_lower == 'u':
+                vowel_count += 1
+            else:
+                consonant_count += 1
+
+            # Append only letters to cleaned string
+            cleaned = cleaned + ch_lower
+
+        index += 1
+
+    # Build reversed string (includes all characters, including punctuation/digits/spaces)
+    reversed_string = ""
+    index = total_length - 1
+    while index >= 0:
+        reversed_string = reversed_string + input_string[index]
+        index -= 1
+
+    # Palindrome check on cleaned letters only
+    cleaned_length = 0
+    while True:
+        try:
+            _ = cleaned[cleaned_length]
+            cleaned_length += 1
+        except IndexError:
+            break
+
+    is_palindrome = True
+    i = 0
+    while i < cleaned_length // 2:
+        if cleaned[i] != cleaned[cleaned_length - 1 - i]:
+            is_palindrome = False
+            break
+        i += 1
+
+     # Empty string → function should return ("", 0, 0, 0, True) (an empty string is a palindrome).
+    if input_string == "":
+        return "", 0, 0, 0, True
+
+    return reversed_string, total_length, vowel_count, consonant_count, is_palindrome
+
+
